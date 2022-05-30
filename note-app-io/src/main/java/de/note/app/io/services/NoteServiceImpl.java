@@ -2,17 +2,22 @@ package de.note.app.io.services;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.note.app.io.dao.NoteRepository;
+import de.note.app.io.dto.NoteDto;
 import de.note.app.io.entity.Note;
 
 @Service
 public class NoteServiceImpl implements NoteService {
 
 	@Autowired
-	NoteRepository noteRepository;
+	private NoteRepository noteRepository;
+	private Note noteEntity;
+
+	private ModelMapper modelMapper = new ModelMapper();;
 
 	@Override
 	public Note findNoteByTitle(String title) {
@@ -20,8 +25,11 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public Note UpDateNote(Note note) {
-		return this.noteRepository.save(note);
+	public Note UpDateNote(NoteDto note) {
+		Note noteEntity = this.noteRepository.getById(note.getId());
+		noteEntity.setTitle(note.getTitle());
+		noteEntity.setBody(note.getBody());
+		return this.noteRepository.save(noteEntity);
 	}
 
 	@Override
@@ -35,8 +43,9 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public Note saveNote(Note note) {
-		return this.noteRepository.save(note);
+	public Note saveNote(NoteDto note) {
+		this.noteEntity = modelMapper.map(note, Note.class);
+		return this.noteRepository.save(noteEntity);
 	}
 
 }
