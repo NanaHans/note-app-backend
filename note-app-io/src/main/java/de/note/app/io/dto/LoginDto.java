@@ -1,7 +1,13 @@
 package de.note.app.io.dto;
 
-public class LoginDto {
+import java.io.Serializable;
 
+public class LoginDto implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 

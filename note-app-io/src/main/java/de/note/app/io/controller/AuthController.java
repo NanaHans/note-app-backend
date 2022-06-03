@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 import de.note.app.io.dto.LoginDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.entity.User;
-import de.note.app.io.services.AccountService;
+import de.note.app.io.services.AuthService;
 
 @RestController
-@RequestMapping("/api/account/")
-public class AccountController {
+@RequestMapping("/api/auth/")
+public class AuthController {
 
 	@Autowired
-	private AccountService accountService;
+	private AuthService authService;
 
-	public AccountController() {
+	public AuthController() {
 
 	}
 
-	@PostMapping(value = "saveUser", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public User saveUser(@RequestBody UserDto userDto) {
-		return this.accountService.registerUser(userDto);
+		return this.authService.registerUser(userDto);
 	}
 
-	@PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public UserDto login(@RequestBody LoginDto loginDto) {
 
 		return new UserDto();

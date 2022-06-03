@@ -14,7 +14,7 @@ import de.note.app.io.dto.UserDto;
 import de.note.app.io.entity.User;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private UserRepository userRepos;
@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 	public User login(LoginDto loginDto) {
 		User user = this.userRepos.findByUsernameAndPassword(loginDto.getUsername(),
 				Hashing.sha256().hashString(loginDto.getPassword(), StandardCharsets.UTF_8).toString());
-		if (user == null) {
+		if (user != null && user.getId() != null) {
 			return null;
 		}
 		return null;
