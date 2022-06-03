@@ -65,4 +65,8 @@ public class UserDto implements Serializable {
 		this.username = username;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }
