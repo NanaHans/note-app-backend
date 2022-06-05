@@ -10,14 +10,18 @@ import com.google.common.hash.Hashing;
 
 import de.note.app.io.dao.UserRepository;
 import de.note.app.io.dto.LoginDto;
+import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.entity.User;
+import de.note.app.io.services.common.error.exception.WrongUsernameOrPasswordException;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private UserRepository userRepos;
+	@Autowired
+	private JwtServiceImpl jwtServiceImpl;
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
@@ -30,13 +34,18 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public User login(LoginDto loginDto) {
+	public SignedInUserDto login(LoginDto loginDto) {
 		User user = this.userRepos.findByUsernameAndPassword(loginDto.getUsername(),
 				Hashing.sha256().hashString(loginDto.getPassword(), StandardCharsets.UTF_8).toString());
 		if (user != null && user.getId() != null) {
-			return null;
+			SignedInUserDto signedInUserDto = new SignedInUserDto();
+			signedInUserDto.setId(user.getId());
+			String jwtToken = this.jwtServiceImpl.generateJwt(user.getId());
+
+			signedInUserDto.setJwtToken(jwtToken);
+			return signedInUserDto;
 		}
-		return null;
+		throw new WrongUsernameOrPasswordException();
 	}
 
 }

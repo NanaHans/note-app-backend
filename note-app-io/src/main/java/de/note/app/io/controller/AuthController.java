@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.note.app.io.dto.LoginDto;
+import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.entity.User;
 import de.note.app.io.services.AuthService;
@@ -29,8 +30,8 @@ public class AuthController {
 	}
 
 	@PostMapping(value = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UserDto login(@RequestBody LoginDto loginDto) {
-
-		return new UserDto();
+	public SignedInUserDto login(@RequestBody LoginDto loginDto) {
+		SignedInUserDto signedInUserDto = this.authService.login(loginDto);
+		return signedInUserDto;
 	}
 }
