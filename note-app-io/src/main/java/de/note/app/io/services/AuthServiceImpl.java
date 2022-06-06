@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
@@ -14,6 +15,7 @@ import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.entity.User;
 import de.note.app.io.services.common.error.exception.WrongUsernameOrPasswordException;
+import de.note.app.io.services.common.message.MessageResponse;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -25,11 +27,18 @@ public class AuthServiceImpl implements AuthService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
-	public User registerUser(UserDto userDto) {
+	public ResponseEntity<?> registerUser(UserDto userDto) {
+		if (Boolean.TRUE.equals(this.userRepos.existsByUsername(userDto.getUsername()))) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+		}
+		if (Boolean.TRUE.equals(this.userRepos.existsByEmail(userDto.getEmail()))) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+		}
 		User user = this.modelMapper.map(userDto, User.class);
 		String passwordHashed = Hashing.sha256().hashString(userDto.getPassword(), StandardCharsets.UTF_8).toString();
 		user.setPassword(passwordHashed);
-		return this.userRepos.save(user);
+		this.userRepos.save(user);
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 
 	}
 
