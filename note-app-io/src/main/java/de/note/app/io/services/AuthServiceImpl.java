@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 		User user = this.userRepos.findByUsernameAndPassword(loginDto.getUsername(),
 				Hashing.sha256().hashString(loginDto.getPassword(), StandardCharsets.UTF_8).toString());
 		if (user != null && user.getId() != null) {
-			SignedInUserDto signedInUserDto = new SignedInUserDto();
+			SignedInUserDto signedInUserDto = this.modelMapper.map(user, SignedInUserDto.class);
 			signedInUserDto.setId(user.getId());
 			String jwtToken = this.jwtServiceImpl.generateJwt(user.getId());
 
