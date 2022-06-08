@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests().antMatchers("api/***").permitAll().and().csrf().disable().cors()
+		httpSecurity.authorizeRequests().antMatchers("api/**").permitAll().and().csrf().disable().cors()
 				.configurationSource(request -> {
 					CorsConfiguration cors = new CorsConfiguration();
 					cors.setAllowedOrigins(Arrays.asList(allowedOrigings.split(",")));
