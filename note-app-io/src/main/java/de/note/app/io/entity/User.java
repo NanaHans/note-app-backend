@@ -3,6 +3,7 @@ package de.note.app.io.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,8 +42,16 @@ public class User implements Serializable {
 	@JoinTable(name = "user_note", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "note_id", referencedColumnName = "id"))
 	private List<Note> notes = new ArrayList<>();
 
-	public User() {
-
+	public User(Long id, String email, String password, String firstname, String lastname, String username,
+			List<Note> notes) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.notes = notes;
 	}
 
 	public String getEmail() {
@@ -95,6 +104,26 @@ public class User implements Serializable {
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstname, id, lastname, notes, password, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(email, other.email) && Objects.equals(firstname, other.firstname)
+				&& Objects.equals(id, other.id) && Objects.equals(lastname, other.lastname)
+				&& Objects.equals(notes, other.notes) && Objects.equals(password, other.password)
+				&& Objects.equals(username, other.username);
 	}
 
 }

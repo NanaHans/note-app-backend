@@ -1,6 +1,7 @@
 package de.note.app.io.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,6 @@ public class Note implements Serializable {
 	}
 
 	public Note() {
-
 	}
 
 	public String getTitle() {
@@ -67,6 +67,24 @@ public class Note implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(body, id, title, user);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Note other = (Note) obj;
+		return Objects.equals(body, other.body) && Objects.equals(id, other.id) && Objects.equals(title, other.title)
+				&& Objects.equals(user, other.user);
 	}
 
 }
