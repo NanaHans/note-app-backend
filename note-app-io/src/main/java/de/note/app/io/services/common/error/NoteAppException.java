@@ -10,7 +10,6 @@ package de.note.app.io.services.common.error;
 public class NoteAppException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	private NoteAppErrorCode errorCode;
 
 	/**
 	 * @param errorCode {@link {@link NoteAppErrorCode}}
@@ -19,7 +18,6 @@ public class NoteAppException extends RuntimeException {
 	 */
 	public NoteAppException(NoteAppErrorCode errorCode) {
 		super(errorCode.getErrorMessage());
-		this.errorCode = errorCode;
 	}
 
 	/**
@@ -30,7 +28,6 @@ public class NoteAppException extends RuntimeException {
 	 */
 	public NoteAppException(NoteAppErrorCode errorCode, Throwable throwable) {
 		super(errorCode.getErrorMessage(), throwable);
-		this.errorCode = errorCode;
 	}
 
 }

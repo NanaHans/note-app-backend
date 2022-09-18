@@ -14,9 +14,15 @@ import de.note.app.io.dto.LoginDto;
 import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.entity.User;
+import de.note.app.io.enums.ResponseMessage;
 import de.note.app.io.services.common.error.exception.WrongUsernameOrPasswordException;
 import de.note.app.io.services.common.message.MessageResponse;
 
+/**
+ * 
+ * @author ${Arsen Nana}
+ *
+ */
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -28,24 +34,27 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public ResponseEntity<?> registerUser(UserDto userDto) {
-		if (Boolean.TRUE.equals(this.userRepos.existsByUsername(userDto.getUsername()))) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-		}
 		if (Boolean.TRUE.equals(this.userRepos.existsByEmail(userDto.getEmail()))) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+			return ResponseEntity.badRequest().body(new MessageResponse(ResponseMessage.REGISTER_EMAIL.getId(),
+					ResponseMessage.REGISTER_EMAIL.getMessage()));
+		}
+		if (Boolean.TRUE.equals(this.userRepos.existsByUsername(userDto.getUsername()))) {
+			return ResponseEntity.badRequest().body(new MessageResponse(ResponseMessage.REGISTER_USERNAME.getId(),
+					ResponseMessage.REGISTER_USERNAME.getMessage()));
 		}
 		User user = this.modelMapper.map(userDto, User.class);
-		String passwordHashed = Hashing.sha256().hashString(userDto.getPassword(), StandardCharsets.UTF_8).toString();
+		String passwordHashed = hashPassword(userDto.getPassword());
 		user.setPassword(passwordHashed);
 		this.userRepos.save(user);
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponse(ResponseMessage.REGISTER_SUCCESS.getId(),
+				ResponseMessage.REGISTER_USERNAME.getMessage()));
 
 	}
 
 	@Override
 	public SignedInUserDto login(LoginDto loginDto) {
 		User user = this.userRepos.findByUsernameAndPassword(loginDto.getUsername(),
-				Hashing.sha256().hashString(loginDto.getPassword(), StandardCharsets.UTF_8).toString());
+				hashPassword(loginDto.getPassword()));
 		if (user != null && user.getId() != null) {
 			SignedInUserDto signedInUserDto = this.modelMapper.map(user, SignedInUserDto.class);
 			signedInUserDto.setId(user.getId());
@@ -55,6 +64,10 @@ public class AuthServiceImpl implements AuthService {
 			return signedInUserDto;
 		}
 		throw new WrongUsernameOrPasswordException();
+	}
+
+	private String hashPassword(String password) {
+		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 	}
 
 }

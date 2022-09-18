@@ -15,9 +15,9 @@ public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private NoteRepository noteRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 	private Note noteEntity;
-
-	private ModelMapper modelMapper = new ModelMapper();;
 
 	@Override
 	public Note findNoteByTitle(String title) {
@@ -26,7 +26,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Note UpDateNote(NoteDto note) {
-		Note noteEntity = this.noteRepository.getById(note.getId());
+		noteEntity = this.noteRepository.getById(note.getId());
 		noteEntity.setTitle(note.getTitle());
 		noteEntity.setBody(note.getBody());
 		return this.noteRepository.save(noteEntity);

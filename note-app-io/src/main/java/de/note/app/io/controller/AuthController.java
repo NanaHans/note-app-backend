@@ -13,16 +13,17 @@ import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.services.AuthService;
 
+/**
+ * 
+ * @author ${Arsen Nana}
+ *
+ */
 @RestController
 @RequestMapping("/api/auth/")
 public class AuthController {
 
 	@Autowired
 	private AuthService authService;
-
-	public AuthController() {
-
-	}
 
 	@PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {

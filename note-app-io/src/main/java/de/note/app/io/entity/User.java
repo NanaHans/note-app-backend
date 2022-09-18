@@ -42,6 +42,10 @@ public class User implements Serializable {
 	@JoinTable(name = "user_note", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "note_id", referencedColumnName = "id"))
 	private List<Note> notes = new ArrayList<>();
 
+	public User() {
+
+	}
+
 	public User(Long id, String email, String password, String firstname, String lastname, String username,
 			List<Note> notes) {
 		super();
