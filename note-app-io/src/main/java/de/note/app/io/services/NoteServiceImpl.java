@@ -5,12 +5,19 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.note.app.io.dao.NoteRepository;
 import de.note.app.io.dto.NoteDto;
 import de.note.app.io.entity.Note;
 
+/**
+ * 
+ * @author ${Arsen Nana}
+ *
+ */
 @Service
+@Transactional
 public class NoteServiceImpl implements NoteService {
 
 	@Autowired
@@ -26,26 +33,26 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Note UpDateNote(NoteDto note) {
-		noteEntity = this.noteRepository.getById(note.getId());
+		noteEntity = noteRepository.getById(note.getId());
 		noteEntity.setTitle(note.getTitle());
 		noteEntity.setBody(note.getBody());
-		return this.noteRepository.save(noteEntity);
+		return noteRepository.save(noteEntity);
 	}
 
 	@Override
 	public List<Note> getAllNotes() {
-		return this.noteRepository.findAll();
+		return noteRepository.findAll();
 	}
 
 	@Override
 	public void deleteNode(long id) {
-		this.noteRepository.deleteById(id);
+		noteRepository.deleteById(id);
 	}
 
 	@Override
 	public Note saveNote(NoteDto note) {
-		this.noteEntity = modelMapper.map(note, Note.class);
-		return this.noteRepository.save(noteEntity);
+		noteEntity = modelMapper.map(note, Note.class);
+		return noteRepository.save(noteEntity);
 	}
 
 }
