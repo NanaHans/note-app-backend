@@ -51,6 +51,28 @@ public class IntegrationTestConfig {
 		return new MariaDB4jSpringService();
 	}
 
+	/*
+	 * @Bean public DataSource dataSource(MariaDB4jSpringService
+	 * mariaDB4jSpringService,
+	 * 
+	 * @Value("${app.mariaDB4j.databaseName}") String databaseName,
+	 * 
+	 * @Value("${spring.datasource.username}") String datasourceUsername,
+	 * 
+	 * @Value("${spring.datasource.password}") String datasourcePassword,
+	 * 
+	 * @Value("${spring.datasource.driver-class-name}") String datasourceDriver)
+	 * throws ManagedProcessException {
+	 * 
+	 * mariaDB4jSpringService.getDB().createDB(databaseName); DBConfigurationBuilder
+	 * config = mariaDB4jSpringService.getConfiguration();
+	 * 
+	 * return DataSourceBuilder.create().username(datasourceUsername).password(
+	 * datasourcePassword)
+	 * .url(config.getURL(databaseName)).driverClassName(datasourceDriver).build();
+	 * }
+	 */
+
 	@Bean
 	public DataSource dataSource() throws ManagedProcessException {
 		MariaDB4jSpringService mariaDB4jSpringService = mariaDB4jSpringService();
