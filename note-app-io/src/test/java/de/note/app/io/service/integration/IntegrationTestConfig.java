@@ -11,7 +11,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -33,45 +32,16 @@ import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
  */
 @Order(HIGHEST_PRECEDENCE)
 @TestConfiguration
-@ComponentScan(basePackages = "de.note.io.services.")
+@ComponentScan(basePackages = "de.note.app.io.")
 public class IntegrationTestConfig {
 
 	@Autowired
 	private Environment env;
 
 	@Bean
-	public ModelMapper modelMapper() {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setAmbiguityIgnored(true);
-		return mapper;
-	}
-
-	@Bean
 	public MariaDB4jSpringService mariaDB4jSpringService() {
 		return new MariaDB4jSpringService();
 	}
-
-	/*
-	 * @Bean public DataSource dataSource(MariaDB4jSpringService
-	 * mariaDB4jSpringService,
-	 * 
-	 * @Value("${app.mariaDB4j.databaseName}") String databaseName,
-	 * 
-	 * @Value("${spring.datasource.username}") String datasourceUsername,
-	 * 
-	 * @Value("${spring.datasource.password}") String datasourcePassword,
-	 * 
-	 * @Value("${spring.datasource.driver-class-name}") String datasourceDriver)
-	 * throws ManagedProcessException {
-	 * 
-	 * mariaDB4jSpringService.getDB().createDB(databaseName); DBConfigurationBuilder
-	 * config = mariaDB4jSpringService.getConfiguration();
-	 * 
-	 * return DataSourceBuilder.create().username(datasourceUsername).password(
-	 * datasourcePassword)
-	 * .url(config.getURL(databaseName)).driverClassName(datasourceDriver).build();
-	 * }
-	 */
 
 	@Bean
 	public DataSource dataSource() throws ManagedProcessException {
@@ -89,7 +59,7 @@ public class IntegrationTestConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ManagedProcessException {
 		final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan("de.note.io.entity");
+		em.setPackagesToScan("de.note.app.io.entity");
 		em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		em.setJpaProperties(additionalProperties());
 		return em;

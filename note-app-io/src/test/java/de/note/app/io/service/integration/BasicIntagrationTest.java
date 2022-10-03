@@ -27,11 +27,11 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 public abstract class BasicIntagrationTest {
 
 	@Autowired
-	private TestRestTemplate testRestTemplate;
+	protected TestRestTemplate testRestTemplate;
 	@Value("${note.app.user.name}")
-	private String INTEGRATION_TEST_USER;
+	protected String INTEGRATION_TEST_USER;
 	@Value("${note.app.user.password.decoded}")
-	private String INTEGRATION_TEST_PASSWORD;
+	protected String INTEGRATION_TEST_PASSWORD;
 
 	@BeforeClass
 	@FlywayTest
