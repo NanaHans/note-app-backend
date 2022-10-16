@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
 		user.setPassword(passwordHashed);
 		this.userRepos.save(user);
 		return ResponseEntity.ok(new MessageResponse(ResponseMessage.REGISTER_SUCCESS.getId(),
-				ResponseMessage.REGISTER_USERNAME.getMessage()));
+				ResponseMessage.REGISTER_SUCCESS.getMessage()));
 
 	}
 
