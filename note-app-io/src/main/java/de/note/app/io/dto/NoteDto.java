@@ -15,7 +15,7 @@ public class NoteDto implements Serializable {
 	private String body;
 
 	public NoteDto() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public Long getId() {

@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -28,9 +27,8 @@ public class Note implements Serializable {
 	private String title;
 	@Column
 	private String body;
-
 	@ManyToOne
-	@JoinTable(name = "user_note", joinColumns = @JoinColumn(name = "note_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Note(String title, String body) {
