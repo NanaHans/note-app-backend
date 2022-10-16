@@ -7,13 +7,13 @@ import de.note.app.io.entity.Note;
 
 public interface NoteService {
 
-	Note saveNote(NoteDto note);
+	Note saveNote(long userId, NoteDto note);
 
 	Note findNoteByTitle(String title);
 
-	Note UpDateNote(NoteDto note);
+	Note upDateNote(long userId, NoteDto note);
 
 	List<Note> getAllNotes();
 
-	void deleteNode(long id);
+	void deleteNode(long userId, long nodeId);
 }

@@ -44,10 +44,11 @@ public class NoteRestController {
 	@PostMapping(value = "saveNote", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public NoteDto saveNote(HttpServletRequest request, @RequestBody NoteDto noteDto) {
 		String token = jwtService.extractTokenFromRequest(request);
+		Long userId = jwtService.getUserId(token);
 		if (token.isBlank()) {
 			throw new UnauthorizedException(new Throwable(INVALID_JWT_TOKEN + token));
 		} else {
-			return modelMapper.map(noteService.saveNote(noteDto), noteDto.getClass());
+			return modelMapper.map(noteService.saveNote(userId, noteDto), noteDto.getClass());
 		}
 	}
 
@@ -60,10 +61,11 @@ public class NoteRestController {
 	@DeleteMapping(value = "deleteNote/id/{id}")
 	void deleteNote(HttpServletRequest request, @PathVariable("id") long id) {
 		String token = jwtService.extractTokenFromRequest(request);
+		long userId = jwtService.getUserId(token);
 		if (token.isBlank()) {
 			throw new UnauthorizedException(new Throwable(INVALID_JWT_TOKEN + token));
 		} else {
-			this.noteService.deleteNode(id);
+			this.noteService.deleteNode(userId, id);
 		}
 	}
 
@@ -77,10 +79,11 @@ public class NoteRestController {
 	@PutMapping(value = "updateNote")
 	public NoteDto updateNote(HttpServletRequest request, @RequestBody NoteDto noteDto) {
 		String token = jwtService.extractTokenFromRequest(request);
+		long userId = jwtService.getUserId(token);
 		if (token.isBlank()) {
 			throw new UnauthorizedException(new Throwable(INVALID_JWT_TOKEN + token));
 		} else {
-			return modelMapper.map(noteService.UpDateNote(noteDto), noteDto.getClass());
+			return modelMapper.map(noteService.upDateNote(userId, noteDto), noteDto.getClass());
 		}
 	}
 
