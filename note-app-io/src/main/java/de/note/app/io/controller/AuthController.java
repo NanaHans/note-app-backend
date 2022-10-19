@@ -12,6 +12,7 @@ import de.note.app.io.dto.LoginDto;
 import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.services.AuthService;
+import de.note.app.io.services.common.message.MessageResponse;
 
 /**
  * 
@@ -26,7 +27,7 @@ public class AuthController {
 	private AuthService authService;
 
 	@PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<MessageResponse> saveUser(@RequestBody UserDto userDto) {
 		return this.authService.registerUser(userDto);
 	}
 

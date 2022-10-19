@@ -36,6 +36,13 @@ public class Note implements Serializable {
 		this.body = body;
 	}
 
+	public Note(Long id, String title, String body, User user) {
+		this.id = id;
+		this.title = title;
+		this.body = body;
+		this.user = user;
+	}
+
 	public Note() {
 	}
 
@@ -57,6 +64,10 @@ public class Note implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public User getUser() {

@@ -14,10 +14,6 @@ public class NoteDto implements Serializable {
 	private String title;
 	private String body;
 
-	public NoteDto() {
-
-	}
-
 	public Long getId() {
 		return id;
 	}

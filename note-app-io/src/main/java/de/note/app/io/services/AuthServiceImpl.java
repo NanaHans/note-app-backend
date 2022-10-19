@@ -35,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	@Override
-	public ResponseEntity<?> registerUser(UserDto userDto) {
+	public ResponseEntity<MessageResponse> registerUser(UserDto userDto) {
 		if (Boolean.TRUE.equals(this.userRepos.existsByEmail(userDto.getEmail()))) {
 			return ResponseEntity.badRequest().body(new MessageResponse(ResponseMessage.REGISTER_EMAIL.getId(),
 					ResponseMessage.REGISTER_EMAIL.getMessage()));
