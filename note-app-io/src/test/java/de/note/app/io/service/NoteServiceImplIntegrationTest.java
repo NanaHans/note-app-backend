@@ -5,59 +5,61 @@ package de.note.app.io.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import de.note.app.io.dao.NoteRepository;
+import de.note.app.io.dao.UserRepository;
 import de.note.app.io.entity.Note;
-import de.note.app.io.services.NoteService;
+import de.note.app.io.entity.User;
 import de.note.app.io.services.NoteServiceImpl;
 
 /**
  * @author ${Arsen Nana}
  *
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class NoteServiceImplIntegrationTest {
 
-	@TestConfiguration
-	static class NoteServiceImplContextConfiguration {
-		@Bean
-		public NoteService noteService() {
-			return new NoteServiceImpl();
-		}
-	}
-
-	@Autowired
-	private NoteService noteService;
-	@MockBean
+	@Mock
 	private NoteRepository noteRepository;
+	@Mock
+	private UserRepository userRepository;
+	@InjectMocks
+	private NoteServiceImpl noteServiceImpl;
 
 	@Before
 	public void setUp() {
-		Note note = new Note("Unit", "Test");
-		Mockito.when(noteRepository.findNoteByTitle(note.getTitle())).thenReturn(note);
+
+		User user = new User(33L, "teast@gmail.com", "test12", "Max", "Mustermann", "max007");
+		Note note1 = new Note(1L, "Test", "SpringBoot Test", user);
+		Note note2 = new Note(2L, "Test-1", "SpringBoot Test-1", user);
+		List<Note> notes = new ArrayList<>();
+		notes.add(note1);
+		notes.add(note2);
+		user.setNotes(notes);
+		Mockito.when(userRepository.findByUsernameAndPassword("max007", "test12")).thenReturn(user);
 	}
 
 	@Test
-	public void whenValidTitle_thenNoteshouldBefound() {
+	public void whenValidUsernameAndPassword_thenUserShouldBefound() {
 		// given
-		String title = "Unit";
+		String username = "max007";
+		String password = "test12";
 
 		// when
-		Note noteFound = noteService.findNoteByTitle(title);
+		User userFound = userRepository.findByUsernameAndPassword(username, password);
 
 		// then
-		assertThat(noteFound.getTitle()).isEqualTo(title);
+		assertThat(userFound.getUsername()).isEqualTo(username);
 
 	}
 
