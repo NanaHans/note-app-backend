@@ -27,7 +27,7 @@ import de.note.app.io.services.NoteServiceImpl;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NoteServiceImplIntegrationtest {
+public class NoteServiceImplIntegrationTest {
 
 	@TestConfiguration
 	static class NoteServiceImplContextConfiguration {

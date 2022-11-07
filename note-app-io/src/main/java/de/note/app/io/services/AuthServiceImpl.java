@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,17 +38,17 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public ResponseEntity<MessageResponse> registerUser(UserDto userDto) {
 		if (Boolean.TRUE.equals(this.userRepos.existsByEmail(userDto.getEmail()))) {
-			return ResponseEntity.badRequest().body(new MessageResponse(ResponseMessage.REGISTER_EMAIL.getId(),
-					ResponseMessage.REGISTER_EMAIL.getMessage()));
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse(
+					ResponseMessage.REGISTER_EMAIL.getId(), ResponseMessage.REGISTER_EMAIL.getMessage()));
 		}
 		if (Boolean.TRUE.equals(this.userRepos.existsByUsername(userDto.getUsername()))) {
-			return ResponseEntity.badRequest().body(new MessageResponse(ResponseMessage.REGISTER_USERNAME.getId(),
-					ResponseMessage.REGISTER_USERNAME.getMessage()));
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse(
+					ResponseMessage.REGISTER_USERNAME.getId(), ResponseMessage.REGISTER_USERNAME.getMessage()));
 		}
 		User user = this.modelMapper.map(userDto, User.class);
 		String passwordHashed = hashPassword(userDto.getPassword());
 		user.setPassword(passwordHashed);
-		this.userRepos.save(user);
+		userRepos.save(user);
 		return ResponseEntity.ok(new MessageResponse(ResponseMessage.REGISTER_SUCCESS.getId(),
 				ResponseMessage.REGISTER_SUCCESS.getMessage()));
 
