@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.note.app.io.dto.NoteDto;
 import de.note.app.io.entity.Note;
-import de.note.app.io.services.JwtServiceImpl;
+import de.note.app.io.security.JwtServiceImpl;
 import de.note.app.io.services.NoteService;
 import de.note.app.io.services.common.error.exception.UnauthorizedException;
 

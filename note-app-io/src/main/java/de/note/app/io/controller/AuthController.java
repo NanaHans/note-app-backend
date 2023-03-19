@@ -32,7 +32,7 @@ public class AuthController {
 	}
 
 	@PostMapping(value = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public SignedInUserDto login(@RequestBody LoginDto loginDto) {
+	public ResponseEntity<SignedInUserDto> login(@RequestBody LoginDto loginDto) {
 		return this.authService.login(loginDto);
 	}
 }

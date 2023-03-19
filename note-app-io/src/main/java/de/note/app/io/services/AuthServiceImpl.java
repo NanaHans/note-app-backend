@@ -1,22 +1,26 @@
 package de.note.app.io.services;
 
-import java.nio.charset.StandardCharsets;
-
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.google.common.hash.Hashing;
 
 import de.note.app.io.dao.UserRepository;
 import de.note.app.io.dto.LoginDto;
 import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
-import de.note.app.io.entity.User;
 import de.note.app.io.enums.ResponseMessage;
+import de.note.app.io.security.JwtServiceImpl;
 import de.note.app.io.services.common.error.exception.WrongUsernameOrPasswordException;
 import de.note.app.io.services.common.message.MessageResponse;
 
@@ -29,11 +33,18 @@ import de.note.app.io.services.common.message.MessageResponse;
 @Transactional
 public class AuthServiceImpl implements AuthService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthServiceImpl.class);
+
 	@Autowired
 	private UserRepository userRepos;
 	@Autowired
 	private JwtServiceImpl jwtServiceImpl;
-	private ModelMapper modelMapper = new ModelMapper();
+	@Autowired
+	private ModelMapper modelMapper;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Override
 	public ResponseEntity<MessageResponse> registerUser(UserDto userDto) {
@@ -45,9 +56,8 @@ public class AuthServiceImpl implements AuthService {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse(
 					ResponseMessage.REGISTER_USERNAME.getId(), ResponseMessage.REGISTER_USERNAME.getMessage()));
 		}
-		User user = this.modelMapper.map(userDto, User.class);
-		String passwordHashed = hashPassword(userDto.getPassword());
-		user.setPassword(passwordHashed);
+		de.note.app.io.entity.User user = this.modelMapper.map(userDto, de.note.app.io.entity.User.class);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepos.save(user);
 		return ResponseEntity.ok(new MessageResponse(ResponseMessage.REGISTER_SUCCESS.getId(),
 				ResponseMessage.REGISTER_SUCCESS.getMessage()));
@@ -55,22 +65,25 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public SignedInUserDto login(LoginDto loginDto) {
-		User user = this.userRepos.findByUsernameAndPassword(loginDto.getUsername(),
-				hashPassword(loginDto.getPassword()));
-		if (user != null && user.getId() != null) {
-			SignedInUserDto signedInUserDto = this.modelMapper.map(user, SignedInUserDto.class);
-			signedInUserDto.setId(user.getId());
-			String jwtToken = this.jwtServiceImpl.generateJwt(user.getId());
+	public ResponseEntity<SignedInUserDto> login(LoginDto loginDto) {
 
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+		User authUser = (User) authentication.getPrincipal();
+
+		de.note.app.io.entity.User userEntity = this.userRepos.findByUsername(loginDto.getUsername())
+				.orElseThrow(() -> new UsernameNotFoundException("User not found."));
+		LOGGER.info("### password encoded {}",
+				passwordEncoder.matches(loginDto.getPassword(), userEntity.getPassword()));
+
+		SignedInUserDto signedInUserDto = modelMapper.map(userEntity, SignedInUserDto.class);
+		if (signedInUserDto != null && signedInUserDto.getId() != null) {
+			String jwtToken = this.jwtServiceImpl.generateJwt(signedInUserDto.getId(), signedInUserDto.getUsername());
 			signedInUserDto.setJwtToken(jwtToken);
-			return signedInUserDto;
+			return ResponseEntity.ok(signedInUserDto);
 		}
-		throw new WrongUsernameOrPasswordException();
-	}
 
-	private String hashPassword(String password) {
-		return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+		throw new WrongUsernameOrPasswordException();
 	}
 
 }

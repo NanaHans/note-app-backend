@@ -11,6 +11,7 @@ public class SignedInUserDto implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private String username;
 	private List<NoteDto> notes = new ArrayList<>();
 	private String jwtToken;
 
@@ -36,6 +37,14 @@ public class SignedInUserDto implements Serializable {
 
 	public void setNotes(List<NoteDto> notes) {
 		this.notes = notes;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

@@ -16,11 +16,11 @@ public class MessageResponse implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private int messageId;
 	private String message;
 
 	public MessageResponse(int id, String message) {
-		this.id = id;
+		this.messageId = id;
 		this.message = message;
 	}
 
@@ -33,11 +33,11 @@ public class MessageResponse implements Serializable {
 	}
 
 	public int getId() {
-		return id;
+		return messageId;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.messageId = id;
 	}
 
 }

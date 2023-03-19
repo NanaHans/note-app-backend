@@ -11,5 +11,5 @@ public interface AuthService {
 
 	public ResponseEntity<MessageResponse> registerUser(UserDto userDto);
 
-	public SignedInUserDto login(LoginDto loginDto);
+	public ResponseEntity<SignedInUserDto> login(LoginDto loginDto);
 }

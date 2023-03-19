@@ -1,4 +1,4 @@
-package de.note.app.io.services;
+package de.note.app.io.security;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,11 +30,12 @@ public class JwtServiceImpl implements JwtService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtServiceImpl.class);
 
-	private static final String AUTH_HEADER_KEY = "authorization";
+	private static final String AUTH_HEADER_KEY = "Authorization";
 	private static final String AUTH_HEADER_VALUE_PREFIX = "Bearer ";
 	private static final String CLAIMS_USER_ID = "userId";
 	private static final String JWT_ISSUER = "note-app-backend";
 	private static final int EXPIRATION_HOURS = 8;
+	private static final String CLAIMS_USERNAME = "username";
 
 	@Value("${note.app.jwt.shared.key}")
 	private String noteAppJwtSharedKey;
@@ -43,10 +44,11 @@ public class JwtServiceImpl implements JwtService {
 	 * generates a JWT-token for a given user
 	 */
 	@Override
-	public String generateJwt(Long userId) {
+	public String generateJwt(Long userId, String username) {
 		Map<String, Object> claims = new HashMap<>();
 
 		claims.put(CLAIMS_USER_ID, userId);
+		claims.put(CLAIMS_USERNAME, username);
 		Date now = new Date();
 		Calendar expirationDate = Calendar.getInstance();
 		expirationDate.add(Calendar.HOUR, EXPIRATION_HOURS);
@@ -88,6 +90,26 @@ public class JwtServiceImpl implements JwtService {
 			return 0L;
 
 		}
+	}
+
+	@Override
+	public String getUsername(String token) {
+		try {
+			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(noteAppJwtSharedKey.getBytes()).build()
+					.parseClaimsJws(token);
+			return (String) claims.getBody().get(CLAIMS_USERNAME);
+		} catch (Exception e) {
+			LOGGER.error("failed to get userId from token: {} ", token);
+			return "";
+
+		}
+	}
+
+	@Override
+	public boolean validateToken(String token) {
+		Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(noteAppJwtSharedKey.getBytes()).build()
+				.parseClaimsJws(token);
+		return !claims.getBody().isEmpty();
 	}
 
 }
