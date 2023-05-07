@@ -23,8 +23,12 @@ import de.note.app.io.entity.User;
 @Service
 public class CustomUerDetailsService implements UserDetailsService {
 
+
+	private final UserRepository userRepos;
 	@Autowired
-	private UserRepository userRepos;
+	public CustomUerDetailsService(UserRepository userRepos) {
+		this.userRepos = userRepos;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

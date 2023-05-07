@@ -1,6 +1,7 @@
 package de.note.app.io.config;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,12 +33,16 @@ import de.note.app.io.security.JwtAuthenticationFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
 	@Value(value = "${note.app.allowed.origins}")
-	private String allowedOrigings;
+	private String allowedOrigins;
+
+	private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+	private final UserDetailsService userDetailsService;
 
 	@Autowired
-	private JwtAuthenticationEntryPoint authenticationEntryPoint;
-	@Autowired
-	private UserDetailsService userDetailsService;
+	public WebSecurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, UserDetailsService userDetailsService) {
+		this.authenticationEntryPoint = authenticationEntryPoint;
+		this.userDetailsService = userDetailsService;
+	}
 
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -65,9 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors().configurationSource(request -> {
 			CorsConfiguration cors = new CorsConfiguration();
-			cors.setAllowedOrigins(Arrays.asList(allowedOrigings.split(",")));
+			cors.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
 			cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-			cors.setAllowedHeaders(Arrays.asList("*"));
+			cors.setAllowedHeaders(List.of("*"));
 			return cors;
 
 		}).and().csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()

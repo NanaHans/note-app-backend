@@ -23,8 +23,12 @@ import de.note.app.io.services.common.message.MessageResponse;
 @RequestMapping("/api/auth/")
 public class AuthController {
 
+
+	private final AuthService authService;
 	@Autowired
-	private AuthService authService;
+	AuthController(AuthService authService){
+		this.authService =authService;
+	}
 
 	@PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MessageResponse> saveUser(@RequestBody UserDto userDto) {

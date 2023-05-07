@@ -24,7 +24,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @SpringBootTest(classes = { IntegrationTestConfig.class }, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, FlywayTestExecutionListener.class })
-public abstract class BasicIntagrationTest {
+public abstract class BasicIntegrationTest {
 
 	@Autowired
 	protected TestRestTemplate testRestTemplate;
@@ -35,7 +35,7 @@ public abstract class BasicIntagrationTest {
 
 	@BeforeClass
 	@FlywayTest
-	public static void beforeclass() {
+	public static void beforeClass() {
 
 	}
 }

@@ -20,7 +20,7 @@ import de.note.app.io.dto.UserDto;
  * @author ${Arsen Nana}
  *
  */
-class AuthControllerTest extends BasicIntagrationTest {
+class AuthControllerTest extends BasicIntegrationTest {
 
 	@Autowired
 	private UserRepository userRepository;
