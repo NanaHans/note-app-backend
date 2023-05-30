@@ -20,7 +20,7 @@ import de.note.app.io.dto.UserDto;
  * @author ${Arsen Nana}
  *
  */
-class AuthControllerTest extends BasicIntegrationTest {
+class AuthLoginControllerTest extends BasicIntegrationTest {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -78,16 +78,16 @@ class AuthControllerTest extends BasicIntegrationTest {
 	}
 
 	private void givenNewUser() {
-		httpEntity = new HttpEntity<>(new UserDto("test@gmail.com", "test123", "Testermann", "TestMax", "test123"));
+		httpEntity = new HttpEntity<>(new UserDto(null,"test@gmail.com", "test123", "Testermann", "TestMax", "test123"));
 	}
 
 	private void givenNewUserWithExistingEmail() {
 		httpEntity = new HttpEntity<>(
-				new UserDto("maxmustermann@gmail.com", "test123", "Testermann", "TestMax", "test123"));
+				new UserDto(null,"maxmustermann@gmail.com", "test123", "Testermann", "TestMax", "test123"));
 	}
 
 	private void givenNewUserWithExistingUserName() {
-		httpEntity = new HttpEntity<>(new UserDto("test@gmail.com", "test123", "Testermann", "TestMax", "tirone007"));
+		httpEntity = new HttpEntity<>(new UserDto(null,"test@gmail.com", "test123", "Testermann", "TestMax", "tirone007"));
 	}
 
 }

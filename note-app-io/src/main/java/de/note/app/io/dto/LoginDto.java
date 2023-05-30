@@ -1,27 +1,20 @@
 package de.note.app.io.dto;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class LoginDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String username;
-	private String password;
+	private final @NonNull String username;
+	private final @NonNull String password;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 }

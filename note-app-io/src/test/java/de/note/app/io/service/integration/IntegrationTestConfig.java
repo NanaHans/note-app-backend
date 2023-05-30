@@ -32,7 +32,7 @@ import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
  */
 @Order(HIGHEST_PRECEDENCE)
 @TestConfiguration
-@ComponentScan(basePackages = "de.note.app.io.")
+@ComponentScan(basePackages = "de.note.app.io.*")
 public class IntegrationTestConfig {
 
 	@Autowired
