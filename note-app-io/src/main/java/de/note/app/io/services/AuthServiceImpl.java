@@ -25,7 +25,7 @@ import de.note.app.io.services.common.error.exception.WrongUsernameOrPasswordExc
 import de.note.app.io.services.common.message.MessageResponse;
 
 /**
- * 
+ *
  * @author ${Arsen Nana}
  *
  */
@@ -35,16 +35,21 @@ public class AuthServiceImpl implements AuthService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthServiceImpl.class);
 
+
+	private final UserRepository userRepos;
+	private final JwtServiceImpl jwtServiceImpl;
+	private final ModelMapper modelMapper;
+	private final PasswordEncoder passwordEncoder;
+	private final AuthenticationManager authenticationManager;
+
 	@Autowired
-	private UserRepository userRepos;
-	@Autowired
-	private JwtServiceImpl jwtServiceImpl;
-	@Autowired
-	private ModelMapper modelMapper;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	public AuthServiceImpl(UserRepository userRepos, JwtServiceImpl jwtServiceImpl, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+		this.userRepos = userRepos;
+		this.jwtServiceImpl = jwtServiceImpl;
+		this.modelMapper = modelMapper;
+		this.passwordEncoder = passwordEncoder;
+		this.authenticationManager = authenticationManager;
+	}
 
 	@Override
 	public ResponseEntity<MessageResponse> registerUser(UserDto userDto) {
