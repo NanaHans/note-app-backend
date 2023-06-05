@@ -1,46 +1,23 @@
 package de.note.app.io.dto;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class SignedInUserDto implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private Long id;
-	private String username;
-	private List<NoteDto> notes = new ArrayList<>();
-	private String jwtToken;
+    private static final long serialVersionUID = 1L;
+    private @NonNull Long id;
+    private @NonNull String username;
+    private List<NoteDto> notes = new ArrayList<>();
+    private @NonNull String jwtToken;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getJwtToken() {
-		return jwtToken;
-	}
-
-	public void setJwtToken(String jwtToken) {
-		this.jwtToken = jwtToken;
-	}
-
-	public List<NoteDto> getNotes() {
-		return notes;
-	}
-
-	public void setNotes(List<NoteDto> notes) {
-		this.notes = notes;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 }

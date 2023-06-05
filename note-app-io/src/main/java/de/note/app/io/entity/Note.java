@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "note")
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 public class Note implements Serializable {
 
@@ -30,6 +30,7 @@ public class Note implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	@Column
 	private String title;
