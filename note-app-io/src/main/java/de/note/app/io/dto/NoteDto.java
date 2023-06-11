@@ -2,17 +2,19 @@ package de.note.app.io.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NoteDto implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final Long id;
-    private final @NonNull String title;
-    private final @NonNull String body;
+    private  Long id;
+    private  @NonNull String title;
+    private  @NonNull String body;
 }

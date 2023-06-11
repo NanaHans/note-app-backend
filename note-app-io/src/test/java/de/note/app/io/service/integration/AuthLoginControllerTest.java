@@ -78,16 +78,33 @@ class AuthLoginControllerTest extends BasicIntegrationTest {
 	}
 
 	private void givenNewUser() {
-		httpEntity = new HttpEntity<>(new UserDto(null,"test@gmail.com", "test123", "Testermann", "TestMax", "test123"));
+		UserDto userDto = new UserDto();
+		userDto.setEmail("test@gmail.com");
+		userDto.setPassword("test123");
+		userDto.setFirstname("Testermann");
+		userDto.setLastname("TestMax");
+		userDto.setUsername("test123");
+		httpEntity = new HttpEntity<>(userDto);
 	}
 
 	private void givenNewUserWithExistingEmail() {
-		httpEntity = new HttpEntity<>(
-				new UserDto(null,"maxmustermann@gmail.com", "test123", "Testermann", "TestMax", "test123"));
+		UserDto userDto = new UserDto();
+		userDto.setEmail("maxmustermann@gmail.com");
+		userDto.setPassword("test123");
+		userDto.setFirstname("Testermann");
+		userDto.setLastname("TestMax");
+		userDto.setUsername("test123");
+		httpEntity = new HttpEntity<>(userDto);
 	}
 
 	private void givenNewUserWithExistingUserName() {
-		httpEntity = new HttpEntity<>(new UserDto(null,"test@gmail.com", "test123", "Testermann", "TestMax", "tirone007"));
+		UserDto userDto = new UserDto();
+		userDto.setEmail("maxmustermann@gmail.com");
+		userDto.setPassword("test123");
+		userDto.setFirstname("Testermann");
+		userDto.setLastname("TestMax");
+		userDto.setUsername("tirone007");
+		httpEntity = new HttpEntity<>(userDto);
 	}
 
 }
