@@ -1,10 +1,10 @@
 /**
  * 
  */
-package de.note.app.io.security;
-
-import de.note.app.io.dao.UserRepository;
-import de.note.app.io.entity.User;
+package de.note.app.service.security;
+import de.note.app.service.entities.User;
+import de.note.app.service.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +23,7 @@ public class CustomUerDetailsService implements UserDetailsService {
 
 
 	private final UserRepository userRepos;
-
+	@Autowired
 	public CustomUerDetailsService(UserRepository userRepos) {
 		this.userRepos = userRepos;
 	}

@@ -1,9 +1,7 @@
 /**
  * 
  */
-package de.note.app.io.security;
-
-import java.io.IOException;
+package de.note.app.service.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * all incoming request are at first unauthorized

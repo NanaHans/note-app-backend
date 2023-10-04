@@ -7,9 +7,10 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
+
 import javax.sql.DataSource;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;

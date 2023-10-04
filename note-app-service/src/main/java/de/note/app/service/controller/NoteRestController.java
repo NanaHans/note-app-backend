@@ -1,23 +1,14 @@
-package de.note.app.io.controller;
+package de.note.app.service.controller;
 
-
+import de.note.app.service.dto.NoteDto;
+import de.note.app.service.security.JwtServiceImpl;
+import de.note.app.service.services.NoteService;
+import de.note.app.service.services.common.error.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import de.note.app.io.dto.NoteDto;
-import de.note.app.io.entity.Note;
-import de.note.app.io.security.JwtServiceImpl;
-import de.note.app.io.services.NoteService;
-import de.note.app.io.services.common.error.exception.UnauthorizedException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/note/")
@@ -36,7 +27,7 @@ public class NoteRestController {
     }
 
     /**
-     * saves a new note {@link Note}
+     * saves a new note {@link de.note.app.service.entities.Note}
      *
      * @param request contains header-informations
      * @param noteDto new note to be saved

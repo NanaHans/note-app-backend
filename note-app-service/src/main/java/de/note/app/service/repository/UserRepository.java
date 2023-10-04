@@ -1,11 +1,10 @@
-package de.note.app.io.dao;
+package de.note.app.service.repository;
+
+import de.note.app.service.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import de.note.app.io.entity.User;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

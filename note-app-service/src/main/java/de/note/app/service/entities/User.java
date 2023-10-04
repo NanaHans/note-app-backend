@@ -1,4 +1,4 @@
-package de.note.app.io.entity;
+package de.note.app.service.entities;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
