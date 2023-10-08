@@ -1,4 +1,4 @@
-package de.note.app.io.security;
+package de.note.app.io.security.impl;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
+import de.note.app.io.security.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

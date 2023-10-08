@@ -2,8 +2,8 @@ package de.note.app.io.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.note.app.io.dto.NoteDto;
 import de.note.app.io.entity.Note;
-import de.note.app.io.security.JwtServiceImpl;
+import de.note.app.io.security.impl.JwtServiceImpl;
 import de.note.app.io.services.NoteService;
 import de.note.app.io.services.common.error.exception.UnauthorizedException;
 
 @RestController
 @RequestMapping("/api/note/")
+@RequiredArgsConstructor
 public class NoteRestController {
     private static final String INVALID_JWT_TOKEN = "Invalid JWT-token: ";
 
@@ -28,12 +29,6 @@ public class NoteRestController {
     private final JwtServiceImpl jwtService;
     private final ModelMapper modelMapper;
 
-    @Autowired
-    public NoteRestController(NoteService noteService, JwtServiceImpl jwtService, ModelMapper modelMapper) {
-        this.noteService = noteService;
-        this.jwtService = jwtService;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * saves a new note {@link Note}

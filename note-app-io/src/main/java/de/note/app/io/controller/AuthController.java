@@ -5,7 +5,7 @@ import de.note.app.io.dto.SignedInUserDto;
 import de.note.app.io.dto.UserDto;
 import de.note.app.io.services.AuthService;
 import de.note.app.io.services.common.message.MessageResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,15 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/auth/")
+@RequiredArgsConstructor
 public class AuthController {
 
-
     private final AuthService authService;
-
-    @Autowired
-    AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageResponse> saveUser(@RequestBody UserDto userDto) {

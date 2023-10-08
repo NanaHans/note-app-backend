@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NoteDto implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private  Long id;
     private  @NonNull String title;

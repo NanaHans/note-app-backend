@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `notepad`;
 USE `notepad`;
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `PASSWORD` varchar(64) DEFAULT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 );
 
 CREATE TABLE IF NOT EXISTS `note` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `body` mediumtext,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

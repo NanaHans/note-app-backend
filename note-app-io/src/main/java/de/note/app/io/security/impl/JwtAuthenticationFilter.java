@@ -1,8 +1,9 @@
 /**
  *
  */
-package de.note.app.io.security;
+package de.note.app.io.security.impl;
 
+import de.note.app.io.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
     private final JwtService jwtService;
-    private final CustomUerDetailsService customUerDetailsService;
+    private final CustomUerDetailsServiceImpl customUerDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,

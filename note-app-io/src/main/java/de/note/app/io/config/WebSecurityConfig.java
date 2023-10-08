@@ -1,8 +1,8 @@
 package de.note.app.io.config;
 
-import de.note.app.io.security.CustomUerDetailsService;
-import de.note.app.io.security.JwtAuthenticationEntryPoint;
-import de.note.app.io.security.JwtAuthenticationFilter;
+import de.note.app.io.security.impl.CustomUerDetailsServiceImpl;
+import de.note.app.io.security.impl.JwtAuthenticationEntryPointImpl;
+import de.note.app.io.security.impl.JwtAuthenticationFilter;
 import de.note.app.io.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +41,11 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Value(value = "${note.app.allowed.origins}")
     private String allowedOrigins;
 
-    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtAuthenticationEntryPointImpl authenticationEntryPoint;
     private final UserDetailsService userDetailsService;
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtService jwtService, CustomUerDetailsService customUerDetailsService) {
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtService jwtService, CustomUerDetailsServiceImpl customUerDetailsService) {
         return new JwtAuthenticationFilter(jwtService, customUerDetailsService);
     }
 

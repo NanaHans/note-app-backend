@@ -1,10 +1,11 @@
 /**
  * 
  */
-package de.note.app.io.security;
+package de.note.app.io.security.impl;
 
 import de.note.app.io.dao.UserRepository;
 import de.note.app.io.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,14 +20,11 @@ import java.util.Collections;
  *
  */
 @Service
-public class CustomUerDetailsService implements UserDetailsService {
+@RequiredArgsConstructor
+public class CustomUerDetailsServiceImpl implements UserDetailsService {
 
 
 	private final UserRepository userRepos;
-
-	public CustomUerDetailsService(UserRepository userRepos) {
-		this.userRepos = userRepos;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
