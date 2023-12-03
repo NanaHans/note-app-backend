@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+ springboot-app:
+   container_name: note-app
+   image: note-app-io
+   restart: always
+   build: .
+   ports:
+     - 8000:8080
+   environment:
+     MYSQL_HOST: mysqldb
+     MYSQL_USER: root
+     MYSQL_PASSWORD: root
+     MYSQL_PORT: 3306
+
+ mysqldb:
+  container_name: mysqldb
+  image: mysql
+  volumes:
+    - C:/Programming/Self Learning/db:/var/lib/mysql
+  ports:
+    - 3307:3306
+  environment:
+    MYSQL_DATABASE: notepad
+    MYSQL_ROOT_PASSWORD: root
+
+
+
