@@ -13,11 +13,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Exportiere Datenbank Struktur für notepad
-CREATE DATABASE IF NOT EXISTS `notepad` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `notepad`;
+-- Exportiere Datenbank Struktur für note_app
+CREATE DATABASE IF NOT EXISTS `note_app` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `note_app`;
 
--- Exportiere Struktur von Tabelle notepad.flyway_schema_history
+-- Exportiere Struktur von Tabelle note_app.flyway_schema_history
 CREATE TABLE IF NOT EXISTS `flyway_schema_history` (
   `installed_rank` int NOT NULL,
   `version` varchar(50) DEFAULT NULL,
@@ -33,14 +33,14 @@ CREATE TABLE IF NOT EXISTS `flyway_schema_history` (
   KEY `flyway_schema_history_s_idx` (`success`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Exportiere Daten aus Tabelle notepad.flyway_schema_history: ~0 rows (ungefähr)
+-- Exportiere Daten aus Tabelle note_app.flyway_schema_history: ~0 rows (ungefähr)
 DELETE FROM `flyway_schema_history`;
 /*!40000 ALTER TABLE `flyway_schema_history` DISABLE KEYS */;
 INSERT INTO `flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES
 	(1, '1', 'createTable', 'SQL', 'V1__createTable.sql', -1522074801, 'root', '2022-10-16 09:57:46', 100, 1);
 /*!40000 ALTER TABLE `flyway_schema_history` ENABLE KEYS */;
 
--- Exportiere Struktur von Tabelle notepad.note
+-- Exportiere Struktur von Tabelle note_app.note
 CREATE TABLE IF NOT EXISTS `note` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `note` (
   CONSTRAINT `note_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
--- Exportiere Daten aus Tabelle notepad.note: ~2 rows (ungefähr)
+-- Exportiere Daten aus Tabelle note_app.note: ~2 rows (ungefähr)
 DELETE FROM `note`;
 /*!40000 ALTER TABLE `note` DISABLE KEYS */;
 INSERT INTO `note` (`id`, `user_id`, `title`, `body`, `timestamp`) VALUES
@@ -60,7 +60,7 @@ INSERT INTO `note` (`id`, `user_id`, `title`, `body`, `timestamp`) VALUES
 	(2, 1, 'rgr234', 'rgreg234', '2022-10-16 11:35:01');
 /*!40000 ALTER TABLE `note` ENABLE KEYS */;
 
--- Exportiere Struktur von Tabelle notepad.user
+-- Exportiere Struktur von Tabelle note_app.user
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Exportiere Daten aus Tabelle notepad.user: ~0 rows (ungefähr)
+-- Exportiere Daten aus Tabelle note_app.user: ~0 rows (ungefähr)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `email`, `username`, `PASSWORD`, `firstname`, `lastname`, `timestamp`) VALUES
